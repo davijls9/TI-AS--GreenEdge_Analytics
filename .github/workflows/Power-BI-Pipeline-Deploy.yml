@@ -1,0 +1,22 @@
+            - name: Power BI Pipeline Deploy
+  # You may pin to the exact commit or the version.
+  # uses: nathangiusti/Power-BI-Pipeline-Deploy@a0513e311de80a199154d40a93e4cc7e381e8432
+  uses: nathangiusti/Power-BI-Pipeline-Deploy@v2.6
+  with:
+    # Files to deploy
+    files: 
+    # Config file location
+    config_file: 
+    # seperates files names/paths
+    separator: # default is ,
+    # tenant id
+    tenant_id: 
+    # defines the staging order
+    source_stage_order: 
+    # 
+    update_app_in_target_workspace: # optional
+    # Should not be needed because this is for reports but fail safe
+    allow_purge_data: # optional
+    # Set to true to deploy datasets with the same name as changed PBIX files. For use when PBIX file contains data
+    deploy_related_datasets: # optional
+          
