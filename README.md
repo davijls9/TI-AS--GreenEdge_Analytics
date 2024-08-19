@@ -44,8 +44,6 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 
 ## 1.6. Cronograma
 
-## 1.6. Cronograma
-
 | **Data**  | **Sprint** | **Atividade** | **Ponto de Foco** | **Pontos** |
 |-----------|------------|---------------|-------------------|------------|
 | **5/08**  | Apresentação da Disciplina | Introdução à disciplina, com apresentação dos objetivos e expectativas. | Compreender a importância do projeto para a disciplina e como ele se alinhará aos objetivos extensionistas. | - |
