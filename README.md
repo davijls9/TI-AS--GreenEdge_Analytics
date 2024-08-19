@@ -69,4 +69,4 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 
 ## 3. Modelagem e diagramas arquiteturais
 Imagem de forma macro do projeto.
-![Figura 1: Visão geral da solução (Camadas)](IMG/modelagem da arquitetura.jpg)
+![Figura 1: Visão geral da solução (Camadas)](IMG/modelagem_da_arquitetura.jpg)
