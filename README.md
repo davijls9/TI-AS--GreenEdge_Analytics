@@ -42,7 +42,7 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 - **Análise de Gasto Energético:** Avaliação detalhada dos custos de energia e identificação de desperdícios.
 - **Desenvolvimento dos Dashboards:** Criação de interfaces intuitivas para visualização dos dados energéticos.
 
-## 1.6. Cronograma
+### 1.6. Cronograma
 
 | **Data**  | **Sprint** | **Atividade** | **Ponto de Foco** | **Pontos** |
 |-----------|------------|---------------|-------------------|------------|
@@ -67,3 +67,6 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 | **16/12** | Apresentação Final | Apresentação dos resultados do projeto, incluindo feedback do cliente (vídeo, áudio, foto, texto). | Realizar a autoavaliação e avaliação por pares, encerrando o projeto. | 25 |
 
 
+## 3. Modelagem e diagramas arquiteturais
+Imagem de forma macro do projeto.
+![Figura 1: Visão geral da solução (Camadas)](IMG/modelagem da arquitetura.jpg)
