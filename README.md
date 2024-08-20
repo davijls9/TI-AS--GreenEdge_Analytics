@@ -37,10 +37,23 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 
 ### 1.4 Definições e Abreviaturas
 - **PUE (Power Usage Effectiveness):** Métrica utilizada para determinar a eficiência energética de um data center, calculada pela divisão da energia total consumida pelo data center pela energia utilizada apenas pelo equipamento de TI.
+- **MTBF (Mean Time Between Failures):** Tempo médio entre falhas, utilizado para medir a confiabilidade de um sistema.
+- **Fan Efficiency (Eficiência da Velocidade dos Ventiladores):** Medida da eficiência operacional dos ventiladores em um data center, importante para a gestão térmica e o consumo de energia.
+- **WUE (Water Usage Effectiveness):** Métrica que avalia a eficiência do uso de água em um data center, calculada pela divisão da quantidade de água utilizada pela energia consumida.
+- **CUE (Carbon Usage Effectiveness):** Índice que mede a quantidade de carbono emitido em relação à energia consumida por um data center.
+- **DCiE (Data Center Infrastructure Efficiency):** Indicador de eficiência da infraestrutura de um data center, calculado pela divisão da energia utilizada pelos equipamentos de TI pela energia total consumida pelo data center.
 - **Eficiência Energética:** Uso eficiente de energia para reduzir o desperdício e o consumo desnecessário, melhorando o desempenho econômico e ambiental.
 - **Dashboard:** Interface gráfica que organiza e apresenta informações de forma visual, permitindo uma análise rápida e intuitiva dos dados.
 - **Sustentabilidade:** Prática de manter processos que não esgotam os recursos naturais e que permitem um desenvolvimento equilibrado e responsável.
 - **Gestores de Energia:** Profissionais responsáveis pela administração e otimização do consumo energético de uma organização.
+- **ISP (Internet Service Provider):** Provedor de Serviços de Internet, responsável por fornecer serviços de conectividade à internet para usuários e empresas.
+- **TI (Tecnologia da Informação):** Conjunto de atividades e soluções providas por recursos de computação, que visam o processamento, armazenamento e transmissão de informações.
+- **UTP (Unshielded Twisted Pair):** Tipo de cabo de rede com pares trançados de fios sem blindagem, utilizado em redes locais para transmissão de dados.
+- **Fibra Óptica:** Tecnologia de transmissão de dados que utiliza fios de vidro ou plástico para transmitir dados na forma de luz, oferecendo alta velocidade e largura de banda.
+- **CGNAT (Carrier-Grade Network Address Translation):** Técnica de tradução de endereços IP utilizada por provedores de internet para permitir que vários usuários compartilhem um único endereço IP público.
+- **NAT (Network Address Translation):** Técnica usada em redes para remapear endereços IP de um espaço de endereçamento para outro, facilitando a conexão de múltiplos dispositivos a uma rede externa usando um único IP público.
+- **Wi-Fi 6:** A mais recente geração de padrões Wi-Fi, que oferece maior velocidade, eficiência e capacidade em redes sem fio.
+
 
 ## 1.5. Requisitos Funcionais
 - **Monitoramento de PUE (Power Usage Effectiveness):** Implementação de métricas para monitorar a eficácia do uso de energia.
