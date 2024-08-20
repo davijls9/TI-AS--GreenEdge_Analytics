@@ -14,8 +14,6 @@ O presente projeto visa desenvolver um dashboard de monitoramento energético pa
 
 ### 1.1 Cliente
 
-Aqui está o texto com as informações adicionais:
-
 Nosso cliente é a Justweb, uma empresa de telecomunicações fundada em 2013 em Ribeirão das Neves, na região metropolitana de Belo Horizonte. A Justweb começou oferecendo internet via rádio e, ao longo dos anos, evoluiu para o uso de fibra óptica, alcançando quase 40 mil assinantes em diversas cidades da região metropolitana de Belo Horizonte. Em setembro de 2023, a empresa foi adquirida pelo grupo Brasil TecPar, o que reforçou ainda mais a qualidade dos serviços prestados e consolidou o seu comprometimento com a transformação no setor de telecomunicações em Minas Gerais e no Brasil.
 
 A Justweb é reconhecida pela sua estrutura de rede organizada, equipe experiente e atendimento ao cliente humanizado, o que levou a empresa a conquistar diversos prêmios municipais e estaduais. A missão da Justweb é surpreender o cliente com alta performance de conectividade, promovendo inclusão, diversidade e qualidade de vida. Sua visão é ser o melhor ISP de Minas Gerais, com suporte rápido e humanizado, garantindo o crescimento sustentável. Seus valores incluem pontualidade, ética, excelência no atendimento, segurança dos colaboradores, empatia, inovação constante, relações humanizadas e gestão por dados.
