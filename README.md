@@ -56,7 +56,7 @@ Além disso, será apresentada uma descrição arquitetural do sistema, permitin
 
 
 ## 1.5. Requisitos Funcionais
-- **Monitoramento de PUE (Power Usage Effectiveness):** Implementação de métricas para monitorar a eficácia do uso de energia.
+- **Metricas de efienciencia energetica:** Implementação de métricas para monitorar a eficácia do uso de energia.
 - **Relatórios de Eficiência Energética:** Criação de relatórios detalhados sobre o consumo energético e a eficiência.
 - **Análise de Desempenho:** Ferramentas para analisar o desempenho energético e identificar áreas de melhoria.
 - **Análise de Gasto Energético:** Avaliação detalhada dos custos de energia e identificação de desperdícios.
