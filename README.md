@@ -3,7 +3,7 @@
 ## Identificação do Grupo
 - **Alexandre França Quirino dos Santos**
 - **Davi Jorge Leite Santos**
-- **Heitor Meinicie Ribeiro**
+- **Heitor Meinicke Ribeiro**
 - **Samuel Rodrigues Cardilo Van Petten**
 - **Samuel Vitor Cardoso Santos**
 
