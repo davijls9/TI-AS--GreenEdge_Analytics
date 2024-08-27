@@ -1,4 +1,4 @@
-# TI-AS--Monitoring_energy
+# TI-AS--GreenEdge_Analytics
 
 ## Identificação do Grupo
 - **Alexandre França Quirino dos Santos**
