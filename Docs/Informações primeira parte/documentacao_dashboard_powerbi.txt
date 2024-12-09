@@ -1,0 +1,158 @@
+
+2.1 Lista de Atores
+Os atores deste projeto, considerando a abordagem do Design Thinking, envolvem:
+
+1. Gestor de TI: Necessita de relatórios detalhados sobre o consumo de energia e eficiência para tomadas de decisões.
+2. Analista de Dados: Utiliza o dashboard para analisar o comportamento dos servidores e identificar padrões de uso.
+3. Diretoria Executiva: Requer uma visão simplificada dos indicadores-chave de desempenho (KPIs) para decisões estratégicas.
+4. Engenheiro de Sustentabilidade: Busca dados de eficiência energética e sustentabilidade para elaborar relatórios de impacto ambiental.
+5. Operador de Servidores: Monitora as métricas em tempo real para assegurar o funcionamento adequado dos sistemas.
+
+2.2 Lista de Funcionalidades
+Funcionalidades a serem atendidas no projeto na visão do cliente:
+
+- Visualizar métricas de eficiência energética, como PUE, DCiE, CUE, e WUE.
+- Monitorar uptime dos servidores com histórico de falhas.
+- Gerar relatórios personalizados sobre consumo de energia e desempenho de servidores.
+- Visualizar a eficiência dos ventiladores e impacto na eficiência geral do data center.
+- Exportar gráficos e relatórios para apresentações e reuniões.
+
+2.3 Requisitos Funcionais
+
+| ID   | Descrição Resumida                                                                  | Dificuldade | Prioridade |
+|------|-------------------------------------------------------------------------------------|-------------|------------|
+| RF01 | O sistema deve permitir a visualização em tempo real dos KPIs                       | M           | A          |
+| RF02 | O sistema deve gerar relatórios de eficiência energética                            | M           | M          |
+| RF03 | O sistema deve alertar em caso de queda de desempenho dos servidores                | A           | A          |
+| RF04 | O sistema deve exportar dados em formatos compatíveis com apresentações             | B           | B          |
+| RF05 | O sistema deve permitir a análise de tendências de consumo ao longo do tempo        | M           | M          |
+| RF06 | O sistema deve ter a possibilidade de filtro de data                                | B           | A          |
+| RF07 | O sistema deve demonstrar alerta sobre irregularidades no consumo                   | A           | B          |
+| RF08 | O sistema deve apresentar gráfico interativos no dashboard                          | M           | M 	        |	
+| RF09 | O sistema deve permitir o download dos gráficos gerados no dashboard  		     | M	   | B	        |
+| RF10 | O sistema deve possibilitar a parametrização do intervalo de atualizações dos dados | M	   | A	        |	
+
+
+2.4 Requisitos Não Funcionais
+
+| ID     | Descrição                                                                        | Prioridade |
+|--------|----------------------------------------------------------------------------------|------------|
+| RNF01  | O sistema deve operar exclusivamente no Power BI                                 | A          |
+| RNF02  | O tempo de atualização dos dados deve ser inferior a 5 minutos                   | M          |
+| RNF03  | O sistema deve ser acessível via desktop com acesso restrito por login           | A          |
+| RNF04  | O desempenho do dashboard não deve ser afetado por grandes volumes de dados      | M          |
+| RNF05  | O sistema deve ser acessível por navegadores de maior uso (Chrome, Firefox, Edge)| A          |
+
+
+2.5 Descrição Resumida dos Casos de Uso ou Histórias de Usuários
+Casos de Uso
+UC01 – Monitoramento de Consumo Energético
+
+Descrição: Permitir o monitoramento em tempo real do consumo energético da empresa.
+Atores: Gestor de Energia, Técnico.
+Prioridade: Alta.
+Requisitos associados: RF01 (Monitoramento de consumo), RNF01 (Tempo de resposta).
+Fluxo Principal:
+O usuário acessa o dashboard.
+O sistema exibe o consumo energético em tempo real.
+O usuário analisa as informações e identifica possíveis ineficiências.
+UC02 – Geração de Relatórios Energéticos
+
+Descrição: Permitir a geração de relatórios periódicos sobre o consumo energético e eficiência.
+Atores: Gestor de Energia, Administrador.
+Prioridade: Média.
+Requisitos associados: RF02 (Geração de relatórios), RNF02 (Capacidade de armazenamento).
+Fluxo Principal:
+O usuário solicita a geração de um relatório.
+O sistema compila os dados energéticos.
+O relatório é gerado e disponibilizado para download.
+UC03 – Análise de Eficiência Energética
+
+Descrição: Permitir a análise da eficiência energética com base em métricas como o PUE.
+Atores: Gestor de Energia, Técnico.
+Prioridade: Alta.
+Requisitos associados: RF03 (Métricas de eficiência), RNF03 (Disponibilidade).
+Fluxo Principal:
+O usuário acessa a seção de análise.
+O sistema exibe as métricas de eficiência (PUE, CUE, etc.).
+O usuário avalia os resultados e identifica áreas para otimização.
+UC04 – Configuração de Alertas de Consumo
+
+Descrição: Permitir a configuração de alertas automáticos para consumo excessivo de energia.
+Atores: Gestor de Energia, Técnico.
+Prioridade: Média.
+Requisitos associados: RF04 (Configuração de alertas), RNF04 (Integração com sistemas de notificação).
+Fluxo Principal:
+O usuário acessa a seção de alertas.
+O usuário define limites de consumo.
+O sistema envia alertas quando o consumo excede os limites.
+UC05 – Visualização de Histórico de Consumo
+
+Descrição: Permitir a visualização do histórico de consumo energético ao longo do tempo.
+Atores: Gestor de Energia, Técnico.
+Prioridade: Alta.
+Requisitos associados: RF05 (Visualização de histórico), RNF02 (Armazenamento de dados).
+Fluxo Principal:
+O usuário acessa a seção de histórico.
+O sistema exibe gráficos com o histórico de consumo.
+O usuário analisa os padrões de consumo ao longo do tempo.
+Histórias de Usuários
+HU01 – Monitoramento de Consumo
+
+EU, COMO: Gestor de Energia.
+QUERO/PRECISO: Quero monitorar o consumo energético em tempo real.
+PARA: Identificar rapidamente qualquer aumento inesperado no consumo.
+MOTIVO/VALOR: Para garantir o controle sobre os custos de energia e evitar desperdícios.
+HU02 – Geração de Relatórios
+
+EU, COMO: Administrador.
+QUERO/PRECISO: Quero gerar relatórios detalhados de consumo energético.
+PARA: Apresentar os resultados em reuniões estratégicas.
+MOTIVO/VALOR: Para tomar decisões baseadas em dados e melhorar a eficiência da empresa.
+HU03 – Análise de Eficiência
+
+EU, COMO: Técnico de Energia.
+QUERO/PRECISO: Quero acessar as métricas de eficiência energética (PUE, CUE).
+PARA: Avaliar o desempenho e sugerir melhorias.
+MOTIVO/VALOR: Para garantir que a empresa esteja otimizando o uso de energia e minimizando desperdícios.
+HU04 – Configuração de Alertas
+
+EU, COMO: Gestor de Energia.
+QUERO/PRECISO: Quero configurar alertas para consumo excessivo de energia.
+PARA: Ser notificado quando o consumo ultrapassar um limite.
+MOTIVO/VALOR: Para evitar surpresas no final do mês e atuar preventivamente.
+HU05 – Visualização de Histórico
+
+EU, COMO: Técnico de Energia.
+QUERO/PRECISO: Quero visualizar o histórico de consumo energético.
+PARA: Identificar padrões e tendências de uso.
+MOTIVO/VALOR: Para entender o comportamento de consumo e planejar ações corretivas.
+
+2.6 Restrições Arquiteturais
+- Ferramenta de Visualização e Análise de Dados: O dashboard deverá ser desenvolvido utilizando Power BI como a principal ferramenta de visualização de dados, permitindo a criação de gráficos interativos e relatórios detalhados sobre o consumo de energia da Justweb.
+- Linguagem de Design e Implementação: A implementação do front-end e back-end será realizada utilizando DAX (Data Analysis Expressions), que servirá como base para o design e a lógica de cálculos no Power BI.
+Persistência de Dados: A persistência dos dados deverá ser gerenciada por meio de ORM (Object-Relational Mapping), facilitando a integração dos dados com o Power BI e garantindo a consistência e acessibilidade das informações armazenadas.
+- Integração com Sistemas Existentes: O sistema deverá permitir a integração com outras bases de dados ou sistemas de monitoramento energético existentes na Justweb, garantindo que os dados relevantes possam ser importados e visualizados no Power BI sem a necessidade de reestruturar o sistema existente.
+- Segurança e Controle de Acesso: A segurança dos dados e o controle de acesso ao dashboard devem ser gerenciados por meio das funcionalidades nativas do Power BI, garantindo que apenas usuários autorizados possam acessar, visualizar ou modificar os dados.
+- Métricas de Eficiência Energética: As métricas propostas, como PUE, WUE e CUE, deverão ser implementadas diretamente no Power BI, utilizando DAX para criar medidas e cálculos necessários para a análise de eficiência energética.
+
+
+2.7 Mecanismos Arquiteturais
+
+A tabela a seguir apresenta uma visão geral dos mecanismos que compõem a arquitetura do dashboard do Power BI, baseando-se nos estados de análise, design e implementação.
+
+| Análise                               | Design                                  | Implementação                    |
+|---------------------------------------|-----------------------------------------|----------------------------------|
+| Integração de Dados                   | Conectores para diferentes fontes       | Power Query                      |
+| ETL (Extração, Transformação, Carga)  | Transformações diretas de dados         | Power Query                      |
+| Persistência de Dados                 | Modelagem de dados interna              | Power BI                         |
+| Visualização e Relatórios             | Visualizações dinâmicas                 | Power BI                         |
+| Interatividade                        | Filtros e Slicers                       | Power BI                         |
+| Segurança de Dados                    | Controle de acesso e permissões         | Power BI                         |
+| Performance                           | Otimização de consultas e modelos       | Power BI                         |
+| Automatização                         | Atualizações automáticas                | Power BI                         |
+| Análise de Dados                      | Fórmulas DAX (Data Analysis Expressions)| DAX Functions                    |
+| Exportação e Compartilhamento         | Relatórios e Dashboards                 | Power BI                         |
+| Tratamento de Erros                   | Verificação de consistência e alertas   | Power BI                         |
+| Documentação                          | Documentação interna e externa          | Power BI                         |
+

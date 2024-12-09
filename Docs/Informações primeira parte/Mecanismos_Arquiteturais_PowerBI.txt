@@ -1,0 +1,21 @@
+
+### 2.7 Mecanismos Arquiteturais
+
+A tabela a seguir apresenta uma visão geral dos mecanismos que compõem a arquitetura do dashboard do Power BI, baseando-se nos estados de análise, design e implementação.
+
+| Análise                       | Design                                  | Implementação                    |
+|-------------------------------|-----------------------------------------|----------------------------------|
+| Integração de Dados           | Conectores para diferentes fontes       | Power Query                      |
+| ETL (Extração, Transformação, Carga) | Transformações diretas de dados      | Power Query Editor               |
+| Persistência de Dados         | Modelagem de dados interna              | Power BI Data Model              |
+| Visualização e Relatórios     | Visualizações dinâmicas                 | Power BI Service / Desktop       |
+| Interatividade                | Filtros e Slicers                       | Power BI Slicers                 |
+| Segurança de Dados            | Controle de acesso e permissões         | Power BI Row-Level Security (RLS)|
+| Performance                   | Otimização de consultas e modelos       | Power BI Performance Analyzer    |
+| Automatização                 | Atualizações automáticas                | Power BI Gateway                 |
+| Análise de Dados              | Fórmulas DAX (Data Analysis Expressions)| DAX Functions                    |
+| Exportação e Compartilhamento | Relatórios e Dashboards                 | Power BI Service                 |
+| Tratamento de Erros           | Verificação de consistência e alertas   | Power BI Alerts                  |
+| Documentação                  | Documentação interna e externa          | Power BI Data Dictionary         |
+
+Essas abordagens são centradas no uso exclusivo do Power BI, garantindo que todos os processos, desde o ETL até a visualização, sejam gerenciados dentro da própria plataforma, sem a necessidade de ferramentas externas.
