@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <!-- Conteúdo principal da página -->
+  <main class="container my-5">
+    <h1 class="text-center">Bem-vindo ao Dashboard</h1>
+    <p class="text-center">Gerencie seu perfil e configurações.</p>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Suas Atividades</h5>
+            <p class="card-text">Aqui você pode visualizar suas últimas atividades e configurar preferências.</p>
+            <a href="#" class="btn btn-primary">Ver Detalhes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script src="../js/componentsLoader.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    loadComponent('#header-container', '../components/header.html');
+    loadComponent('#footer-container', '../components/footer.html');
+  </script>
+</body>
+</html>

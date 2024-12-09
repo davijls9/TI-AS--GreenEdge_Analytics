@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Dados Aleatórios</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Conteúdo principal da página -->
+    <main class="container my-5">
+        <h1 class="text-center">Gerador de Dados Aleatórios</h1>
+        
+        <!-- Abas para selecionar o servidor -->
+        <div class="text-center mt-4">
+            <button id="tab1" onclick="showServerData('server1')" class="btn btn-secondary mr-2 active">Servidor 1</button>
+            <button id="tab2" onclick="showServerData('server2')" class="btn btn-secondary">Servidor 2</button>
+        </div>
+
+        <!-- Botões de ações -->
+        <div class="text-center mt-4">
+            <button onclick="generateTable()" class="btn btn-primary mr-2">Gerar Tabela</button>
+            <button onclick="downloadExcel()" class="btn btn-success mr-2">Baixar Excel</button>
+            <input type="file" id="uploadExcel" accept=".xlsx" onchange="importExcel()" class="btn btn-info">
+            <button onclick="uploadAndAtualizarPowerBI()" class="btn btn-warning">Enviar e Atualizar Power BI</button>
+        </div>
+        
+        <!-- Container para a tabela gerada -->
+        <div id="table-container" class="table-responsive mt-4"></div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="../js/componentsLoader.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        // Carrega header e footer
+        loadComponent('#header-container', '../components/header.html');
+        loadComponent('#footer-container', '../components/footer.html');
+
+        // Definindo as colunas exatas para cada servidor conforme o arquivo Excel
+        const server1Headers = [
+            "Time", "Corrente no Sensor Current - 1", "Corrente no Sensor Current - 2", "Perda de PING",
+            "Respostas SNMP", "Status PING", "Temperatura no Sensor Ambient Temp", "Tempo de resposta PING",
+            "TensÃ£o no Sensor Voltage - 1", "TensÃ£o no Sensor Voltage - 2", "Uptime da GerÃªncia de Rede",
+            "Velocidade da FAN FAN MOD 1A RPM", "Velocidade da FAN FAN MOD 1B RPM",
+            "Velocidade da FAN FAN MOD 2A RPM", "Velocidade da FAN FAN MOD 2B RPM",
+            "Velocidade da FAN FAN MOD 3A RPM", "Velocidade da FAN FAN MOD 3B RPM",
+            "Velocidade da FAN FAN MOD 4A RPM", "Velocidade da FAN FAN MOD 4B RPM",
+            "Velocidade da FAN FAN MOD 5A RPM", "Velocidade da FAN FAN MOD 5B RPM",
+            "Velocidade da FAN FAN MOD 6A RPM", "Velocidade da FAN FAN MOD 6B RPM"
+        ];
+
+        const server2Headers = server1Headers;  // Utiliza a mesma estrutura de cabeçalho para o "Servidor 2"
+
+        let currentHeaders = server1Headers;
+
+        // Alterna entre os dados dos servidores
+        function showServerData(server) {
+            if (server === 'server1') {
+                currentHeaders = server1Headers;
+                document.getElementById("tab1").classList.add("active");
+                document.getElementById("tab2").classList.remove("active");
+            } else if (server === 'server2') {
+                currentHeaders = server2Headers;
+                document.getElementById("tab2").classList.add("active");
+                document.getElementById("tab1").classList.remove("active");
+            }
+            generateTable();
+        }
+
+        // Data inicial para gerar dados sequenciais até a data atual
+        const startDate = new Date("2024-08-14T09:00:00");
+        let currentGeneratedDate = new Date(startDate);
+
+        // Função para calcular o número de dias entre a data inicial e a data atual
+        function calculateDaysBetweenDates(start, end) {
+            const oneDay = 24 * 60 * 60 * 1000; // Milissegundos em um dia
+            return Math.round(Math.abs((end - start) / oneDay));
+        }
+
+        // Função para gerar dados aleatórios de uma única linha
+        function generateRandomData() {
+            // Avança um dia a partir da data inicial
+            currentGeneratedDate.setDate(currentGeneratedDate.getDate() + 1);
+            if (currentGeneratedDate > new Date()) {
+                currentGeneratedDate = new Date(startDate); // Reinicia para a data inicial se passar da data atual
+            }
+
+            // Formata a data no formato solicitado "aaaa/mm/dd hh:mm:ss"
+            const formattedDate = currentGeneratedDate.toISOString().slice(0, 19).replace("T", " ");
+
+            return [
+                formattedDate,
+                (Math.random() * 0.2).toFixed(4),
+                (Math.random() * 0.6 + 0.4).toFixed(3),
+                (Math.random() * 1).toFixed(2) + "%",
+                Math.floor(Math.random() * 2),
+                Math.floor(Math.random() * 2),
+                (Math.random() * 10 + 15).toFixed(1),
+                (Math.random() * 10).toFixed(2) + " µs",
+                Math.floor(Math.random() * 20 + 120),
+                Math.floor(Math.random() * 20 + 120),
+                Math.floor(Math.random() * 100) + " d " + Math.floor(Math.random() * 24) + ":" + ("0" + Math.floor(Math.random() * 60)).slice(-2) + ":" + ("0" + Math.floor(Math.random() * 60)).slice(-2),
+                ...Array(12).fill().map(() => `${Math.floor(Math.random() * 1000 + 3500)} rpm`)
+            ];
+        }
+        
+
+        function generateTable() {
+            const tableContainer = document.getElementById("table-container");
+            tableContainer.innerHTML = "";
+
+            const table = document.createElement("table");
+            table.className = "table table-bordered table-striped";
+            const headerRow = table.insertRow();
+            currentHeaders.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+
+            for (let i = 0; i < 50; i++) {
+                const row = table.insertRow();
+                generateRandomData().forEach(data => {
+                    const cell = row.insertCell();
+                    cell.textContent = data;
+                });
+            }
+
+            tableContainer.appendChild(table);
+        }
+
+        // Função para gerar o conteúdo de uma planilha com a quantidade exata de dias entre startDate e a data atual
+        function generateSheetData(headers) {
+            const daysBetween = calculateDaysBetweenDates(startDate, new Date());
+            return [headers, ...Array(daysBetween).fill().map(generateRandomData)];
+        }
+
+        function downloadExcel() {
+            const server1Data = generateSheetData(server1Headers);
+            const server2Data = generateSheetData(server2Headers);
+
+            const wb = XLSX.utils.book_new();
+            const ws1 = XLSX.utils.aoa_to_sheet(server1Data);
+            const ws2 = XLSX.utils.aoa_to_sheet(server2Data);
+
+            XLSX.utils.book_append_sheet(wb, ws1, "Servidor 1");
+            XLSX.utils.book_append_sheet(wb, ws2, "Servidor 2");
+
+            XLSX.writeFile(wb, "dados_aleatorios.xlsx");
+        }
+
+        function importExcel() {
+            const fileInput = document.getElementById("uploadExcel");
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: "array" });
+
+                // Processa a planilha "Servidor 1"
+                if (workbook.Sheets["Servidor 1"]) {
+                    const server1Data = XLSX.utils.sheet_to_json(workbook.Sheets["Servidor 1"], { header: 1 });
+                    displayImportedData(server1Data, "server1");
+                }
+
+                // Processa a planilha "Servidor 2"
+                if (workbook.Sheets["Servidor 2"]) {
+                    const server2Data = XLSX.utils.sheet_to_json(workbook.Sheets["Servidor 2"], { header: 1 });
+                    displayImportedData(server2Data, "server2");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function displayImportedData(data, server) {
+            currentHeaders = server === "server1" ? server1Headers : server2Headers;
+
+            const tableContainer = document.getElementById("table-container");
+            tableContainer.innerHTML = "";
+
+            const table = document.createElement("table");
+            table.className = "table table-bordered table-striped";
+            const headerRow = table.insertRow();
+            currentHeaders.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+
+            data.slice(1).forEach(rowData => {
+                const row = table.insertRow();
+                rowData.forEach(cellData => {
+                    const cell = row.insertCell();
+                    cell.textContent = cellData;
+                });
+            });
+
+            tableContainer.appendChild(table);
+        }
+
+        function atualizarPowerBI() {
+            fetch('http://localhost:5000/atualizar_powerbi')
+                .then(response => {
+                    if (response.ok) {
+                        alert("Atualização do Power BI iniciada com sucesso.");
+                    } else {
+                        alert("Erro ao iniciar a atualização do Power BI.");
+                    }
+                })
+                .catch(error => console.error("Erro:", error));
+        }
+
+        function uploadExcel() {
+            const fileInput = document.getElementById('uploadExcel');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Por favor, selecione um arquivo Excel para enviar.");
+                return;
+            }
+    
+            const formData = new FormData();
+            formData.append('file', file);
+    
+            fetch("http://localhost:5000/atualizar_dados", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Dados atualizados com sucesso no servidor!");
+                } else {
+                    alert("Erro ao atualizar dados: " + data.message);
+                }
+            })
+            .catch(error => console.error("Erro:", error));
+        }
+
+
+
+
+
+
+        
+    // Função para gerar um arquivo Excel dinamicamente com dados de exemplo
+    function gerarDadosExcel() {
+        const server1Data = generateSheetData(server1Headers);
+        const server2Data = generateSheetData(server2Headers);
+
+        const wb = XLSX.utils.book_new();
+        const ws1 = XLSX.utils.aoa_to_sheet(server1Data);
+        const ws2 = XLSX.utils.aoa_to_sheet(server2Data);
+
+        XLSX.utils.book_append_sheet(wb, ws1, "Servidor 1");
+        XLSX.utils.book_append_sheet(wb, ws2, "Servidor 2");
+
+        // Converte o arquivo Excel para Blob para envio
+        return XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    }
+
+    // Função combinada para upload e atualização do Power BI
+    function uploadAndAtualizarPowerBI() {
+        const fileInput = document.getElementById('uploadExcel');
+        const file = fileInput.files[0];
+
+        const formData = new FormData();
+
+        if (file) {
+            // Se o usuário selecionou um arquivo, usamos esse arquivo
+            formData.append('file', file);
+        } else {
+            // Caso contrário, gera um arquivo Excel dinâmico com dados fictícios
+            const dadosGerados = gerarDadosExcel();
+            const blob = new Blob([dadosGerados], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            formData.append('file', blob, "dados_aleatorios.xlsx");
+        }
+
+        // Envia o arquivo (seja o selecionado pelo usuário ou o gerado) para o servidor
+        fetch("http://localhost:5000/atualizar_dados", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Dados atualizados com sucesso no servidor!");
+                atualizarPowerBI();  // Chama a função para atualizar o Power BI após o upload
+            } else {
+                alert("Erro ao atualizar dados: " + data.message);
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    // Função de atualização do Power BI no servidor
+    function atualizarPowerBI() {
+        fetch('http://localhost:5000/atualizar_powerbi')
+            .then(response => {
+                if (response.ok) {
+                    alert("Atualização do Power BI iniciada com sucesso.");
+                } else {
+                    alert("Erro ao iniciar a atualização do Power BI.");
+                }
+            })
+            .catch(error => console.error("Erro:", error));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        showServerData('server1');
+    </script>
+</body>
+</html>

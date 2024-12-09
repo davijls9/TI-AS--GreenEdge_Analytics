@@ -1,0 +1,12 @@
+Na base do projeto distribuido, na pasta web, rode esses comandos no cmd:
+"""
+
+npm install -g http-server
+http-server .
+
+"""
+
+E em um novo cmd administrativo, execute na mesma pasta:
+
+pip install flask flask_cors openpyxl
+python server.py
