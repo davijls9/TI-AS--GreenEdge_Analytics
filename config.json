@@ -1,0 +1,8 @@
+{
+    "BASE_PATH": "E:\\TI-AS--Monitoring_energy",
+    "DATA_FILE_PATH": "Dados Servidores.xlsx",
+    "POWERBI_SCRIPT_PATH": "atualizar_dados_powerbi.ps1",
+    "dadosExcelPath": "Dados Servidores.xlsx",
+    "powerBIPath": "C:\\Program Files\\Microsoft Power BI Desktop\\bin\\PBIDesktop.exe",
+    "pbixFilePath": "TDD - Server 1.pbix"
+}
