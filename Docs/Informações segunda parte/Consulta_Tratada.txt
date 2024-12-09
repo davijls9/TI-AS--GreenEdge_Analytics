@@ -1,0 +1,101 @@
+let
+    // Código do Servidor 1
+    Servidor1Fonte = Excel.Workbook(File.Contents("C:\Users\Justweb\Projetos\TI-AS--Monitoring_energy\Dados Servidores.xlsx"), null, true),
+    Servidor1Navegação = Servidor1Fonte{[Item="Servidor 1", Kind="Sheet"]}[Data],
+    Servidor1CabeçalhosPromovidos = Table.PromoteHeaders(Servidor1Navegação, [PromoteAllScalars=true]),
+    Servidor1TipoAlterado = Table.TransformColumnTypes(Servidor1CabeçalhosPromovidos, {{"Time", type datetime}, {"Corrente no Sensor Current - 1", Int64.Type}, {"Corrente no Sensor Current - 2", Int64.Type}, {"Perda de PING", type number}, {"Respostas SNMP", Int64.Type}, {"Status PING", Int64.Type}, {"Temperatura no Sensor Ambient Temp", Int64.Type}, {"Tempo de resposta PING", type text}, {"TensÃ£o no Sensor Voltage - 1", Int64.Type}, {"TensÃ£o no Sensor Voltage - 2", Int64.Type}, {"Uptime da GerÃªncia de Rede", type text}, {"Velocidade da FAN FAN MOD 1A RPM", type text}, {"Velocidade da FAN FAN MOD 1B RPM", type text}, {"Velocidade da FAN FAN MOD 2A RPM", type text}, {"Velocidade da FAN FAN MOD 2B RPM", type text}, {"Velocidade da FAN FAN MOD 3A RPM", type text}, {"Velocidade da FAN FAN MOD 3B RPM", type text}, {"Velocidade da FAN FAN MOD 4A RPM", type text}, {"Velocidade da FAN FAN MOD 4B RPM", type text}, {"Velocidade da FAN FAN MOD 5A RPM", type text}, {"Velocidade da FAN FAN MOD 5B RPM", type text}, {"Velocidade da FAN FAN MOD 6A RPM", type text}, {"Velocidade da FAN FAN MOD 6B RPM", type text}}),
+    Servidor1ColunasRenomeadas = Table.RenameColumns(Servidor1TipoAlterado, {{"TensÃ£o no Sensor Voltage - 1", "Tencao no Sensor Voltage - 1"}, {"TensÃ£o no Sensor Voltage - 2", "Tencao no Sensor Voltage - 2"}, {"Uptime da GerÃªncia de Rede", "Uptime da Gerencia de Rede"}}),
+    Servidor1PersonalizaçãoAdicionada = Table.AddColumn(Servidor1ColunasRenomeadas, "Horas Ativas", each 
+    let 
+        Uptime = Text.Trim([Uptime da Gerencia de Rede]), 
+        DaysPart = Text.BeforeDelimiter(Uptime, " d "), 
+        Days = try Number.From(DaysPart) otherwise 0, 
+        TimePart = Text.AfterDelimiter(Uptime, " d "), 
+        TimeParts = Text.Split(TimePart, ":"),
+        Hours = try Number.From(TimeParts{0}) otherwise 0, 
+        Minutes = try Number.From(TimeParts{1}) otherwise 0, 
+        Seconds = try Number.From(TimeParts{2}) otherwise 0, 
+        TotalHours = (Days * 24) + Hours + (Minutes / 60) + (Seconds / 3600) 
+    in
+        TotalHours
+    ),
+    Servidor1RetirandoRPMs = let
+        ColunasParaSubstituir = List.Select(Table.ColumnNames(Servidor1PersonalizaçãoAdicionada), each Text.Contains(_, "Velocidade da FAN FAN MOD")),
+        SubstituirRPM = Table.ReplaceValue(Servidor1PersonalizaçãoAdicionada, "rpm", "", Replacer.ReplaceText, ColunasParaSubstituir)
+    in
+        SubstituirRPM,
+    
+    // Adicionando coluna de identificação do servidor
+    Servidor1Identificado = Table.AddColumn(Servidor1RetirandoRPMs, "Servidor Origem", each "Servidor 1"),
+    
+    // Código do Servidor 2 (similar ao do Servidor 1)
+    Servidor2Fonte = Excel.Workbook(File.Contents("C:\Users\Justweb\Projetos\TI-AS--Monitoring_energy\Dados Servidores.xlsx"), null, true),
+    Servidor2Navegação = Servidor2Fonte{[Item="Servidor 2", Kind="Sheet"]}[Data],
+    Servidor2CabeçalhosPromovidos = Table.PromoteHeaders(Servidor2Navegação, [PromoteAllScalars=true]),
+    Servidor2TipoAlterado = Table.TransformColumnTypes(Servidor2CabeçalhosPromovidos, {{"Time", type datetime}, {"Corrente no Sensor Current - 1", Int64.Type}, {"Corrente no Sensor Current - 2", Int64.Type}, {"Perda de PING", type number}, {"Respostas SNMP", Int64.Type}, {"Status PING", Int64.Type}, {"Temperatura no Sensor Ambient Temp", Int64.Type}, {"Tempo de resposta PING", type text}, {"TensÃ£o no Sensor Voltage - 1", Int64.Type}, {"TensÃ£o no Sensor Voltage - 2", Int64.Type}, {"Uptime da GerÃªncia de Rede", type text}, {"Velocidade da FAN FAN MOD 1A RPM", type text}, {"Velocidade da FAN FAN MOD 1B RPM", type text}, {"Velocidade da FAN FAN MOD 2A RPM", type text}, {"Velocidade da FAN FAN MOD 2B RPM", type text}, {"Velocidade da FAN FAN MOD 3A RPM", type text}, {"Velocidade da FAN FAN MOD 3B RPM", type text}, {"Velocidade da FAN FAN MOD 4A RPM", type text}, {"Velocidade da FAN FAN MOD 4B RPM", type text}, {"Velocidade da FAN FAN MOD 5A RPM", type text}, {"Velocidade da FAN FAN MOD 5B RPM", type text}, {"Velocidade da FAN FAN MOD 6A RPM", type text}, {"Velocidade da FAN FAN MOD 6B RPM", type text}}),
+    Servidor2ColunasRenomeadas = Table.RenameColumns(Servidor2TipoAlterado, {{"TensÃ£o no Sensor Voltage - 1", "Tencao no Sensor Voltage - 1"}, {"TensÃ£o no Sensor Voltage - 2", "Tencao no Sensor Voltage - 2"}, {"Uptime da GerÃªncia de Rede", "Uptime da Gerencia de Rede"}}),
+    Servidor2PersonalizaçãoAdicionada = Table.AddColumn(Servidor2ColunasRenomeadas, "Horas Ativas", each 
+    let 
+        Uptime = Text.Trim([Uptime da Gerencia de Rede]), 
+        DaysPart = Text.BeforeDelimiter(Uptime, " d "), 
+        Days = try Number.From(DaysPart) otherwise 0, 
+        TimePart = Text.AfterDelimiter(Uptime, " d "), 
+        TimeParts = Text.Split(TimePart, ":"),
+        Hours = try Number.From(TimeParts{0}) otherwise 0, 
+        Minutes = try Number.From(TimeParts{1}) otherwise 0, 
+        Seconds = try Number.From(TimeParts{2}) otherwise 0, 
+        TotalHours = (Days * 24) + Hours + (Minutes / 60) + (Seconds / 3600) 
+    in
+        TotalHours
+    ),
+    Servidor2RetirandoRPMs = let
+        ColunasParaSubstituir = List.Select(Table.ColumnNames(Servidor2PersonalizaçãoAdicionada), each Text.Contains(_, "Velocidade da FAN FAN MOD")),
+        SubstituirRPM = Table.ReplaceValue(Servidor2PersonalizaçãoAdicionada, "rpm", "", Replacer.ReplaceText, ColunasParaSubstituir)
+    in
+        SubstituirRPM,
+    
+    // Adicionando coluna de identificação do servidor
+    Servidor2Identificado = Table.AddColumn(Servidor2RetirandoRPMs, "Servidor Origem", each "Servidor 2"),
+    
+    // Combinar dados dos dois servidores
+    ServidoresCombinados = Table.Combine({Servidor1Identificado, Servidor2Identificado}),
+    
+    // Manter os cálculos e tratamentos existentes aplicados na tabela combinada
+    TabelaComCUE = Table.AddColumn(ServidoresCombinados, "CUE (Carbon Usage Effectiveness)", each 0.1 + Number.RoundDown(Number.RandomBetween(0, 2) / 100, 3), type number),
+    TabelaComWUE = Table.AddColumn(TabelaComCUE, "WUE (Water Usage Effectiveness)", each Number.RoundDown(0.5 + Number.RandomBetween(0, 20) / 10, 2), type number),
+    TabelaComTemperatura = Table.AddColumn(TabelaComWUE, "Temperatura Média do Data Center", each 16 + Number.RoundDown(Number.RandomBetween(-10, 20) / 10, 1), type number),
+    TabelaComDCiE = Table.AddColumn(TabelaComTemperatura, "DCiE (Data Center Infrastructure Efficiency)", 
+        each let
+            EnergiaTI = [#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"], 
+            EnergiaTotal = ([#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"]) + ([#"Corrente no Sensor Current - 2"] * [#"Tencao no Sensor Voltage - 2"])
+        in 
+            if EnergiaTotal <> 0 then (EnergiaTI / EnergiaTotal) * 100 else null, 
+        type number),
+    TabelaComPUE = Table.AddColumn(TabelaComDCiE, "PUE (Power Usage Effectiveness)", 
+        each let
+            EnergiaTI = [#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"], 
+            EnergiaTotal = ([#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"]) + ([#"Corrente no Sensor Current - 2"] * [#"Tencao no Sensor Voltage - 2"]) 
+        in 
+            if EnergiaTI <> 0 then EnergiaTotal / EnergiaTI else null, 
+        type number),
+    TabelaComFanEfficiency = Table.AddColumn(TabelaComPUE, "Fan Efficiency", 
+        each let
+            VelocidadeMedia = List.Average(List.Transform({[#"Velocidade da FAN FAN MOD 1A RPM"], [#"Velocidade da FAN FAN MOD 1B RPM"], [#"Velocidade da FAN FAN MOD 2A RPM"], 
+                                             [#"Velocidade da FAN FAN MOD 2B RPM"], [#"Velocidade da FAN FAN MOD 3A RPM"], [#"Velocidade da FAN FAN MOD 3B RPM"],
+                                             [#"Velocidade da FAN FAN MOD 4A RPM"], [#"Velocidade da FAN FAN MOD 4B RPM"], [#"Velocidade da FAN FAN MOD 5A RPM"],
+                                             [#"Velocidade da FAN FAN MOD 5B RPM"], [#"Velocidade da FAN FAN MOD 6A RPM"], [#"Velocidade da FAN FAN MOD 6B RPM"]}, each try Number.From(_) otherwise null)),
+            CorrenteTotal = [#"Corrente no Sensor Current - 1"] + [#"Corrente no Sensor Current - 2"] 
+        in 
+            if CorrenteTotal <> 0 then VelocidadeMedia / CorrenteTotal else null, 
+        type number),
+    TabelaFinal = Table.AddColumn(TabelaComFanEfficiency, "MTBF (Mean Time Between Failures)", 
+        each let
+            TempoOperacao = [#"Horas Ativas"], 
+            NumeroFalhas = List.Sum(List.Transform({[#"Perda de PING"], [#"Respostas SNMP"]}, each if _ > 0 then 1 else 0))
+        in 
+            if NumeroFalhas <> 0 then TempoOperacao / NumeroFalhas else TempoOperacao, 
+        type number
+    ),
+    #"Erros Removidos" = Table.RemoveRowsWithErrors(TabelaFinal, {"MTBF (Mean Time Between Failures)"})
+in
+    #"Erros Removidos"

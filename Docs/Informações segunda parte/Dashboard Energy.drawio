@@ -1,0 +1,69 @@
+<mxfile host="Electron" modified="2024-10-21T02:11:53.010Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="t6AQAjJbeA8uOhIdUrRC" version="21.7.5" type="device">
+  <diagram name="Page-1" id="5f0bae14-7c28-e335-631c-24af17079c00">
+    <mxGraphModel dx="2357" dy="1599" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="39150e848f15840c-2" target="bexXE6ZV7vF8PLQRzlMT-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-2" value="2 - ETL - Power BI (Distribuído)" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="435" y="-10" width="570" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="39150e848f15840c-8" value="&lt;div&gt;&lt;b&gt;Data Transformation&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;1. &lt;/b&gt;Combinação e Limpeza de Dados (Remove Nulos, Duplicados)&lt;/div&gt;&lt;div&gt;&lt;b&gt;2. &lt;/b&gt;Cálculo de Métricas (CUE, WUE, PUE, DCiE, etc.)&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;b&gt;3. &lt;/b&gt;Aplicação de Filtros e Formatação&lt;/div&gt;" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=left;" parent="1" vertex="1">
+          <mxGeometry x="455" y="40" width="520" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-1" value="4 - Dashboard (Relatórios e Visualizações)" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="-190" y="280" width="570" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bexXE6ZV7vF8PLQRzlMT-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380.0000000000002" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-2" value="3 - User Interaction" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="435" y="280" width="570" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-3" value="Web Interface&lt;br&gt;(Acesso ao Power BI)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="455" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-4" value="Visualização Interativa&lt;br&gt;(Dinamically Updated)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="615" y="380" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-5" value="Filtros Personalizados&lt;br&gt;(Ajuste de Datas, PUE, etc)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="785" y="440" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-6" value="Dashboard Eficiência&lt;br&gt;PUE, WUE, CUE" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="320" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-7" value="Dashboard Consumo Energia &lt;br&gt;Corrente e Tensão" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="380" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-8" value="Dashboard Temperatura&lt;br&gt;Comportamento das FANs" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="440" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bexXE6ZV7vF8PLQRzlMT-9" target="39150e848f15840c-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-9" value="1 - Data Source" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="-190" y="-10" width="570" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-10" value="Excel File&lt;br&gt;(Servidor 1)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="30" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-11" value="Database&lt;br&gt;(Energy Data)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="90" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-12" value="System Logs&lt;br&gt;(Historical)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="150" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-13" value="API Service&lt;br&gt;(Distributed)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="150" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bexXE6ZV7vF8PLQRzlMT-14" value="IoT Devices&lt;br&gt;(Sensor Data)" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="30" width="180" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

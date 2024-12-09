@@ -1,0 +1,83 @@
+ 3. Modelagem e Diagramas Arquiteturais (Modelo C4)
+
+Neste projeto, utilizamos o Modelo C4 para ilustrar a arquitetura do sistema, partindo de uma visão geral (Nível 1: Diagrama de Contexto) até a implementação de código detalhada (Nível 4: Código). Nosso objetivo é representar de forma clara a solução utilizando Power BI para a criação de dashboards, englobando todo o processo, desde o ETL até a exibição dos dados.
+
+ 3.1 Nível 1: Diagrama de Contexto
+
+O Diagrama de Contexto mostra a interação do nosso sistema de dashboards com os usuários e os sistemas externos com os quais ele se conecta. O principal objetivo é fornecer visualizações e relatórios interativos sobre o consumo de energia e eficiência do data center.
+
+ Atores:
+- Gestores: Interagem diretamente com o sistema para visualizar relatórios e tomar decisões com base nos dados apresentados.
+- Equipe de TI: Responsável por manter a infraestrutura e garantir o bom funcionamento dos sistemas.
+- Fontes de Dados: Planilhas e APIs de monitoramento de energia e sensores de TI alimentam o Power BI com dados relevantes.
+
+Breve explicação do diagrama: O Power BI é central, responsável por receber dados das fontes de sensores de TI e exibir visualizações e dashboards interativos. Os gestores e equipe de TI consomem essas informações para otimizar o uso de energia e monitorar a infraestrutura.
+
+ 3.2 Nível 2: Diagrama de Contêiner
+
+O Diagrama de Contêiner mostra como as responsabilidades são distribuídas dentro da arquitetura de software e como os contêineres interagem entre si. No nosso projeto, o contêiner principal é o Power BI, que faz o processamento de ETL, modelagem e visualização de dados.
+
+ Contêineres:
+- Power BI: Realiza a extração, transformação e carregamento dos dados (ETL), além de ser responsável pelas visualizações dos dashboards.
+- Fontes de Dados: Planilhas e APIs, de onde o Power BI extrai os dados.
+- Usuários: Gestores e equipe de TI que consomem os dashboards.
+
+ Comunicação:
+- ETL no Power BI: O processo de ETL é realizado dentro do próprio Power BI, sem necessidade de ferramentas externas. Ele coleta os dados das fontes e os prepara para serem exibidos.
+- Dashboards: Os usuários acessam os dashboards diretamente via o Power BI Service ou o Power BI Desktop.
+
+ 3.3 Nível 3: Diagrama de Componentes
+
+No Diagrama de Componentes, detalhamos como o contêiner Power BI é composto de diferentes módulos ou "componentes".
+
+ Componentes:
+1. Fonte de Dados:
+   - Planilhas Excel: Dados de energia coletados manualmente ou via sensores exportados para arquivos Excel.
+   - APIs de Sensores: API que transmite dados de sensores do data center.
+   
+2. Power BI ETL:
+   - Processo de Transformação: Limpeza e agregação dos dados dentro do Power BI, utilizando o Power Query.
+   - Modelo de Dados: Definido dentro do Power BI, utilizando relações entre tabelas para facilitar a criação de visualizações.
+
+3. Power BI Dashboard:
+   - Gráficos e Visualizações: Apresentação visual dos dados transformados, como gráficos de barras, linhas, mapas, etc.
+   - Filtros e Slicers: Elementos interativos que permitem aos usuários refinar os dados mostrados.
+   
+4. Usuários:
+   - Gestores: Consumidores finais dos relatórios, usando Power BI para visualizar o desempenho energético.
+   - Equipe de TI: Acompanha a infraestrutura e consome dados operacionais dos sensores.
+
+ 3.4 Nível 4: Código
+
+No nível 4, descrevemos a estrutura de dados e os relacionamentos que suportam a solução no Power BI. Como o foco é no ETL e na visualização de dados dentro do Power BI, o principal diagrama aqui seria um Diagrama de Entidade-Relacionamento (ER) para o modelo de dados.
+
+ Modelo de Dados no Power BI:
+- Tabela de Sensores: Contém dados como corrente elétrica, tensão, e outros dados dos sensores de energia.
+- Tabela de Horários: Relacionada aos dados de sensores, representando a periodicidade das medições.
+- Tabela de Resultados: Resultados calculados (como PUE, CUE) com base nos dados de sensores, armazenados em campos calculados no Power BI.
+  
+Os relacionamentos entre as tabelas são configurados dentro do Power BI, com chaves que conectam os dados de sensores aos resultados calculados e aos horários de medição.
+
+ Exemplo de Diagrama de ER (Entidade-Relacionamento):
+- Tabela Sensores:
+   - ID_Sensor (PK)
+   - DataHora (FK)
+   - CorrenteSensor
+   - TensaoSensor
+   - Temperatura
+   
+- Tabela Horários:
+   - ID_Horario (PK)
+   - DataHora
+   
+- Tabela Resultados:
+   - ID_Resultado (PK)
+   - ID_Sensor (FK)
+   - PUE
+   - CUE
+   - MTBF
+
+Esses diagramas mostram a estrutura lógica dos dados e como eles são relacionados para gerar insights de eficiência energética no Power BI.
+
+ Conclusão
+A arquitetura projetada é simplificada, usando apenas o Power BI para realizar o processo de ETL e visualizações, sem a necessidade de plataformas externas.

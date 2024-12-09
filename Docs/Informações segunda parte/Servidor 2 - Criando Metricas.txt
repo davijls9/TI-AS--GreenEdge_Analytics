@@ -1,0 +1,96 @@
+let
+    Fonte = Excel.Workbook(File.Contents("C:\Users\Justweb\Projetos\TI-AS--Monitoring_energy\Dados Servidores.xlsx"), null, true),
+    Navegação = Fonte{[Item="Servidor 2",Kind="Sheet"]}[Data],
+    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Navegação, [PromoteAllScalars=true]),
+    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Time", type datetime}, {"Corrente no Sensor Current - 1", Int64.Type}, {"Corrente no Sensor Current - 2", Int64.Type}, {"Perda de PING", type number}, {"Respostas SNMP", Int64.Type}, {"Status PING", Int64.Type}, {"Temperatura no Sensor Ambient Temp", Int64.Type}, {"Tempo de resposta PING", type text}, {"TensÃ£o no Sensor Voltage - 1", Int64.Type}, {"TensÃ£o no Sensor Voltage - 2", Int64.Type}, {"Uptime da GerÃªncia de Rede", type text}, {"Velocidade da FAN FAN MOD 1A RPM", type text}, {"Velocidade da FAN FAN MOD 1B RPM", type text}, {"Velocidade da FAN FAN MOD 2A RPM", type text}, {"Velocidade da FAN FAN MOD 2B RPM", type text}, {"Velocidade da FAN FAN MOD 3A RPM", type text}, {"Velocidade da FAN FAN MOD 3B RPM", type text}, {"Velocidade da FAN FAN MOD 4A RPM", type text}, {"Velocidade da FAN FAN MOD 4B RPM", type text}, {"Velocidade da FAN FAN MOD 5A RPM", type text}, {"Velocidade da FAN FAN MOD 5B RPM", type text}, {"Velocidade da FAN FAN MOD 6A RPM", type text}, {"Velocidade da FAN FAN MOD 6B RPM", type text}}),
+    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"TensÃ£o no Sensor Voltage - 1", "Tencao no Sensor Voltage - 1"}, {"TensÃ£o no Sensor Voltage - 2", "Tencao no Sensor Voltage - 2"}, {"Uptime da GerÃªncia de Rede", "Uptime da Gerencia de Rede"}}),
+    #"Personalização Adicionada" = Table.AddColumn(#"Colunas Renomeadas", "Personalizar", each Table.AddColumn(#"Tipo Alterado", "Horas Ativas", each 
+    let 
+        Uptime = Text.Trim([Uptime da Gerencia de Rede]), // Remove espaços em branco ao redor, se houver
+        DaysPart = Text.BeforeDelimiter(Uptime, " d "), // Extrai a parte dos dias (AA)
+        Days = try Number.From(DaysPart) otherwise 0, // Converte dias para número
+        TimePart = Text.AfterDelimiter(Uptime, " d "), // Extrai a parte do tempo (BB:CC:DD)
+        TimeParts = Text.Split(TimePart, ":"),
+        Hours = try Number.From(TimeParts{0}) otherwise 0, // Converte horas para número
+        Minutes = try Number.From(TimeParts{1}) otherwise 0, // Converte minutos para número
+        Seconds = try Number.From(TimeParts{2}) otherwise 0, // Converte segundos para número
+        // Calculo Total de Horas Ativas
+        TotalHours = (Days * 24) + Hours + (Minutes / 60) + (Seconds / 3600) // Converte dias para horas, soma horas, e converte minutos e segundos para frações de hora
+    in
+        TotalHours
+)),
+    #"Personalizar Expandido" = Table.ExpandTableColumn(#"Personalização Adicionada", "Personalizar", {"Horas Ativas"}, {"Personalizar.Horas Ativas"}),
+    #"Colunas Renomeadas1" = Table.RenameColumns(#"Personalizar Expandido",{{"Personalizar.Horas Ativas", "Horas Ativas"}}),
+    #"Retirando os RPM's" = let
+    Fonte = #"Colunas Renomeadas1",
+    ColunasParaSubstituir = List.Select(Table.ColumnNames(Fonte), each Text.Contains(_, "Velocidade da FAN FAN MOD")),
+    SubstituirRPM = Table.ReplaceValue(Fonte, "rpm", "", Replacer.ReplaceText, ColunasParaSubstituir)
+in
+    SubstituirRPM,
+    #"Adicionando as colunas" = let
+    // Adiciona a coluna CUE
+    TabelaComCUE = Table.AddColumn(#"Retirando os RPM's", "CUE (Carbon Usage Effectiveness)", each 0.1 + Number.RoundDown(Number.RandomBetween(0, 2) / 100, 3), type number),
+    
+    // Adiciona a coluna WUE
+    TabelaComWUE = Table.AddColumn(TabelaComCUE, "WUE (Water Usage Effectiveness)", each Number.RoundDown(0.5 + Number.RandomBetween(0, 20) / 10, 2), type number),
+    
+    // Adiciona a coluna Temperatura Média
+    TabelaFinal = Table.AddColumn(TabelaComWUE, "Temperatura Média do Data Center", each 16 + Number.RoundDown(Number.RandomBetween(-10, 20) / 10, 1), type number)
+in
+    TabelaFinal,
+    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Adicionando as colunas", {{"CUE (Carbon Usage Effectiveness)", type number}}, "pt-BR"),
+    #"Tipo Alterado com Localidade1" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade", {{"WUE (Water Usage Effectiveness)", type number}}, "pt-BR"),
+    #"Tipo Alterado com Localidade2" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade1", {{"Temperatura Média do Data Center", type number}}, "pt-BR"),
+    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade2",{{"Temperatura Média do Data Center", Int64.Type}}),
+
+    // Adicionando DCiE (Data Center Infrastructure Efficiency)
+    TabelaComDCiE = Table.AddColumn(#"Tipo Alterado2", "DCiE (Data Center Infrastructure Efficiency)", 
+        each let
+            EnergiaTI = [#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"], // Energia consumida pelos equipamentos de TI
+            EnergiaTotal = ([#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"]) + ([#"Corrente no Sensor Current - 2"] * [#"Tencao no Sensor Voltage - 2"]) // Energia total consumida
+        in 
+            if EnergiaTotal <> 0 then (EnergiaTI / EnergiaTotal) * 100 else null, // Calcula o DCiE
+        type number),
+    
+    // Adicionando PUE (Power Usage Effectiveness)
+    TabelaComPUE = Table.AddColumn(TabelaComDCiE, "PUE (Power Usage Effectiveness)", 
+        each let
+            EnergiaTI = [#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"], // Energia consumida pelos equipamentos de TI
+            EnergiaTotal = ([#"Corrente no Sensor Current - 1"] * [#"Tencao no Sensor Voltage - 1"]) + ([#"Corrente no Sensor Current - 2"] * [#"Tencao no Sensor Voltage - 2"]) // Energia total consumida
+        in 
+            if EnergiaTI <> 0 then EnergiaTotal / EnergiaTI else null, // Calcula o PUE
+        type number),
+
+    // Adicionando Eficiência da Velocidade dos Ventiladores (Fan Efficiency)
+    TabelaComFanEfficiency = Table.AddColumn(TabelaComPUE, "Fan Efficiency", 
+        each let
+            VelocidadeMedia = List.Average(List.Transform({[#"Velocidade da FAN FAN MOD 1A RPM"], [#"Velocidade da FAN FAN MOD 1B RPM"], [#"Velocidade da FAN FAN MOD 2A RPM"], 
+                                             [#"Velocidade da FAN FAN MOD 2B RPM"], [#"Velocidade da FAN FAN MOD 3A RPM"], [#"Velocidade da FAN FAN MOD 3B RPM"],
+                                             [#"Velocidade da FAN FAN MOD 4A RPM"], [#"Velocidade da FAN FAN MOD 4B RPM"], [#"Velocidade da FAN FAN MOD 5A RPM"],
+                                             [#"Velocidade da FAN FAN MOD 5B RPM"], [#"Velocidade da FAN FAN MOD 6A RPM"], [#"Velocidade da FAN FAN MOD 6B RPM"]}, each try Number.From(_) otherwise null)),
+            CorrenteTotal = [#"Corrente no Sensor Current - 1"] + [#"Corrente no Sensor Current - 2"] // Corrente total nos sensores
+        in 
+            if CorrenteTotal <> 0 then VelocidadeMedia / CorrenteTotal else null, // Calcula a eficiência dos ventiladores
+        type number),
+
+    // Adicionando MTBF (Mean Time Between Failures)
+    TabelaComMTBF = Table.AddColumn(TabelaComFanEfficiency, "MTBF (Mean Time Between Failures)", 
+        each let
+            TempoOperacao = [#"Horas Ativas"], // Usa horas ativas como tempo total de operação
+            NumeroFalhas = List.Sum(List.Transform({[#"Perda de PING"], [#"Respostas SNMP"]}, each if _ > 0 then 1 else 0)) // Considera falhas se houver perda de PING ou falta de respostas SNMP
+        in 
+            if NumeroFalhas <> 0 then TempoOperacao / NumeroFalhas else TempoOperacao, // Calcula o MTBF
+        type number),
+
+    // Tratamento de incompatibilidades de tipo
+    TratarIncompatibilidades = 
+        let
+            tableWithOnlyPrimitiveTypes = Table.SelectColumns(TabelaComMTBF, Table.ColumnsOfType(TabelaComMTBF, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+            recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+            fieldNames = Record.FieldNames(recordTypeFields),
+            fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+            pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "O tipo do valor não corresponde ao tipo da coluna.", Detail = v], fieldTypes{i}})
+        in
+            Table.TransformColumns(TabelaComMTBF, pairs)
+in
+    TratarIncompatibilidades
